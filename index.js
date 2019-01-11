@@ -82,7 +82,6 @@ var _option = function(option) {
 module.exports = function (content, file, option) {
 	option = _option(option)
 	if (file.ext == '.html') {
-		console.log(option)
 		content = _c(content, option)
 	}
 	return content
