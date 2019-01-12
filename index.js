@@ -30,7 +30,12 @@ var _c = function(content,option) {
 				}
 				// 再编译一遍，为了保证 hash 值是一样的。
 				info.file.useHash && fis.compile(info.file);
-				dir.push(info.file.useHash ? info.file.map.uri : path);
+				if (info.file.domain ) {
+					var regD = new RegExp(info.file.domain);
+					dir.push(info.file.useHash ? info.file.map.uri.replace(regD, '') : path.replace(regD, ''));
+				} else {
+					dir.push(info.file.useHash ? info.file.map.uri : path);
+				}
 			}
 		}
 		// 去掉过滤出来的链接
@@ -38,13 +43,14 @@ var _c = function(content,option) {
 		// 将要忽略的链接重新加回去
 		content += excludeTag.join('')
 		// while循环每个链接最大的合并数
+		// console.log(dir)
 		while (dir.length) {
 			switch (tag) {
 				case 'link':
-					content += '<link rel="stylesheet" href="'+ host +'/??' + dir.splice(0,max).join(',') + '">'
+					content = content.replace(/<\/head>/, '<link rel="stylesheet" href="'+ host +'/??' + dir.splice(0,max).join(',') + '"></head>')
 					break;
 				case 'script':
-					content += '<script type="text/javascript" src="'+ host +'/??' + dir.splice(0,max).join(',') + '"></script>'
+					content = content.replace(/<\/body>/, '<script type="text/javascript" src="'+ host +'/??' + dir.splice(0,max).join(',') + '"></script></body>')
 					break;
 			}
 		}
