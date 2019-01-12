@@ -6,11 +6,11 @@ var _c = function(content,option) {
 	for (var i = 0; i < tags.length; i++) {
 		var tag = tags[i];
 		if (!/(link)|(script)/.test(tag)) continue;
-		// 当配置了使用相对路径时fis 会给路径加上relative包裹
+		// When configured to use a relative path, fis adds a relative package to the path.
 		var reg = new RegExp('<'+tag+'(.+)[(src)|(href)]="__relative(.+)>(</'+tag+'>)?', 'ig');
 		var regPath = new RegExp('.+<<<(.+)>>>.+', 'ig');
 		if (!reg.test(content)) {
-			// 以http或者https开头的第三方资源不再合并的范围里
+			//  resources starting with http or https are not in the scope of consolidation.
 			reg = new RegExp('<'+tag+'(.+)[(src)|(href)]="((?!https?:).)+">(</'+tag+'>)?', 'ig');
 			regPath = new RegExp('.+src="(.+)".+', 'ig');
 		}
@@ -18,7 +18,7 @@ var _c = function(content,option) {
 		var excludeTag = []; //
 		var dir = [];
 		for (var j = 0; j < arr.length; j ++) {
-			// 如果标签是要被忽略的，则不进行合并
+			// If the tag is to be ignored, no merge is done
 			if (option.exclude.length && includeArr(option.exclude, arr[j])) {
 				excludeTag.push(arr[j]);
 			} else {
@@ -28,7 +28,7 @@ var _c = function(content,option) {
 					dir.push(info.origin);
 					continue;
 				}
-				// 再编译一遍，为了保证 hash 值是一样的。
+				// Compile again, in order to ensure that the hash value is the same。
 				info.file.useHash && fis.compile(info.file);
 				if (info.file.domain ) {
 					var regD = new RegExp(info.file.domain);
@@ -38,12 +38,11 @@ var _c = function(content,option) {
 				}
 			}
 		}
-		// 去掉过滤出来的链接
+		// Remove filtered tags
 		content = content.replace(reg, '');
-		// 将要忽略的链接重新加回去
+		// Add the tags to be ignored back
 		content += excludeTag.join('')
-		// while循环每个链接最大的合并数
-		// console.log(dir)
+		// while cycle the maximum number of merges per tag
 		while (dir.length) {
 			switch (tag) {
 				case 'link':
@@ -59,11 +58,18 @@ var _c = function(content,option) {
 
 	return content;
 }
-
-var includeArr = function (arr, str) {
+/**
+ *
+ * determine  the element is in an array
+ * params arr Array
+ * params str string
+ * params strict Booleam // equals strict
+ * **/
+var includeArr = function (arr, str, strict) {
 	var _include = false;
+	var strict = strict || false;
 	for (var i = 0; i < arr.length; i ++) {
-		var reg = new RegExp(arr[i], 'g');
+		var reg = strict ? new RegExp('^'+arr[i]+'$', 'g') : new RegExp(arr[i], 'g');
 		if (reg.test(str)) {
 			_include = true;
 			break;
@@ -71,23 +77,29 @@ var includeArr = function (arr, str) {
 	}
 	return _include
 }
-// 配置项option处理
+// set option
 var _option = function(option) {
 	if (!option.tag) option.tag = ['link', 'script'];
 	if (typeof option.tag == 'string') {
 		option.tag = option.tag.replace(/\s+/g,'').split(',')
 	}
 	option.max = ~~option.max || 10;
+	// exclude: ignore not concat css,js file ，
 	if(typeof option.exclude == 'string') {
 		option.exclude = option.exclude.replace(/\s+/g,'').split(',')
 	}
 	if (!option.exclude) option.exclude = [];
+	// ignoreFile: ignore not concat HTML file
+	if(typeof option.ignoreFile == 'string') {
+		option.ignoreFile = option.ignoreFile.replace(/\s+/g,'').split(',')
+	}
+	if (!option.ignoreFile) option.ignoreFile = [];
 	return option
 }
 
 module.exports = function (content, file, option) {
-	option = _option(option)
-	if (file.ext == '.html') {
+	option = _option(option);
+	if (file.ext == '.html' && !includeArr(option.ignoreFile, file.filename+file.ext, true)) { // just concat html file and not in ignoreFile
 		content = _c(content, option)
 	}
 	return content

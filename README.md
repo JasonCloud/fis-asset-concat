@@ -8,12 +8,13 @@ fis.plugin('concat-asset',{
 		host: '', // 主域名 默认是相对路径 type: string
 		max: '',// 合并资源的数 type: number | string
 		tag: '', // 需要合并资源的标签目前暂时只支持 script和link 标签,type: array | string   exg: ['link','script'] | 'link, script'(字符串时以英文逗号隔开)
-		exclude: ''// 需要忽略的合并项  type: array | string exg: ['name1','name2'] | 'name1, name2'(字符串时以英文逗号隔开)
+		exclude: '',// 需要忽略的合并项  type: array | string exg: ['name1','name2'] | 'name1, name2'(字符串时以英文逗号隔开)
+		ignoreFile: '' // 需要忽略的html文件 type: array | string exg: ['test','test2'] | 'test, test2'(字符串时以英文逗号隔开, 是HTML文件名，不用带路径和后缀)
 	})
 ```
 
-# 使用
-
+# 安装
+npm install fis3-optimizer-concat-asset -D
 ## 合并前
 
 ```
