@@ -1,28 +1,28 @@
 {
-  "_from": "fis3-optimizer-concat-asset@0.0.2",
-  "_id": "fis3-optimizer-concat-asset@0.0.2",
+  "_from": "fis3-optimizer-concat-asset",
+  "_id": "fis3-optimizer-concat-asset@0.1.0",
   "_inBundle": false,
-  "_integrity": "sha512-wm3UJRk83eFRn6tOXvK8G+syK+NrQayRPvbbkR+LQos/Ggkl4OpPSjDFtxpV0JVEAGXjNM1qZMr0lKmpH/Oa/Q==",
+  "_integrity": "sha512-y3mLD3UmtctmjVp8CYxev/ZV1h4wnM6Urp3pPqR1Cl8zcFAR3jGqQCDcW+hUciaWjdIKtYQHYXbe0kaeVTTaIg==",
   "_location": "/fis3-optimizer-concat-asset",
   "_phantomChildren": {},
   "_requested": {
-    "type": "version",
+    "type": "tag",
     "registry": true,
-    "raw": "fis3-optimizer-concat-asset@0.0.2",
+    "raw": "fis3-optimizer-concat-asset",
     "name": "fis3-optimizer-concat-asset",
     "escapedName": "fis3-optimizer-concat-asset",
-    "rawSpec": "0.0.2",
+    "rawSpec": "",
     "saveSpec": null,
-    "fetchSpec": "0.0.2"
+    "fetchSpec": "latest"
   },
   "_requiredBy": [
     "#DEV:/",
     "#USER"
   ],
-  "_resolved": "https://registry.npmjs.org/fis3-optimizer-concat-asset/-/fis3-optimizer-concat-asset-0.0.2.tgz",
-  "_shasum": "d97ea30a1da49fdfcd2327351b3f2abc836f4ae5",
-  "_spec": "fis3-optimizer-concat-asset@0.0.2",
-  "_where": "D:\\life_project\\pages",
+  "_resolved": "https://registry.npmjs.org/fis3-optimizer-concat-asset/-/fis3-optimizer-concat-asset-0.1.0.tgz",
+  "_shasum": "974b91cc27efdbb7417b49584d5996dcc7d35b3e",
+  "_spec": "fis3-optimizer-concat-asset",
+  "_where": "D:\\nginx-1.11.10\\customer",
   "author": {
     "name": "jasonCloud"
   },
@@ -48,5 +48,5 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "version": "0.1.0"
+  "version": "0.2.0"
 }

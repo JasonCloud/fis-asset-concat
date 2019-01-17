@@ -41,7 +41,13 @@ var _c = function(content,option) {
 		// Remove filtered tags
 		content = content.replace(reg, '');
 		// Add the tags to be ignored back
-		content += excludeTag.join('')
+    for(var k = 0; k < excludeTag.length; k++) {
+      if(tag == 'link') {
+        content = content.replace(/<\/head>/,  excludeTag[k] + '</head>')
+      } else if(tag == 'script') {
+        content = content.replace(/<\/body>/,  excludeTag[k] + '</body>')
+      }
+    }
 		// while cycle the maximum number of merges per tag
 		while (dir.length) {
 			switch (tag) {
